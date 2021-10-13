@@ -4,7 +4,7 @@ const app = express();
 
 const database = require('./lib/database');
 
-app.use(express.static(path.join(__dirname, 'build'))); // Serves build production files
+app.use(express.static(path.join(__dirname, 'public'))); // Serves build production files
 app.use(express.json());
 
 app.get('/vehicles', (req, res) => {
@@ -28,8 +28,13 @@ app.delete('/vehicles/:id', (req, res) => {
 });
 
 // Serves build production files
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
+
+app.get('*', function (req, res) {
+  const index = path.join(__dirname, 'public', 'index.html');
+  res.sendFile(index);
 });
 
 app.listen(3001, () => {
